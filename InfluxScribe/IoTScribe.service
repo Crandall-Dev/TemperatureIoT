@@ -1,0 +1,15 @@
+[Unit]
+Description=IoT MQTT to InfluxDB Scribe
+After=network.target
+Requires=influxdb.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=crandall
+ExecStart=/usr/local/IoT/bin/IoTScribe.py
+
+[Install]
+WantedBy=multi-user.target
