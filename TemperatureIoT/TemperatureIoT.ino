@@ -137,7 +137,9 @@ void handleNetworkStatus() {
     WiFi.disconnect();
     WiFi.begin();
 
-    Serial.print("Connecting to WiFi...");
+    Serial.print("Connecting to WiFi (SSID: ");
+    Serial.print(WiFi.SSID());
+    Serial.print(") ...");
     while (WiFi.status() != WL_CONNECTED) {
       ledToggle();
       delay(500);
