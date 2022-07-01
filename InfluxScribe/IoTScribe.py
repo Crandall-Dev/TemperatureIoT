@@ -26,7 +26,7 @@ def createTemperaturePoint(dat):
             "deviceLocation": dat["location"],
         },
         "fields": {
-            "value": dat["value"]
+            "value": float(dat["value"])
         }
     }
     return point
@@ -39,11 +39,23 @@ def createHumidityPoint(dat):
             "deviceLocation": dat["location"],
         },
         "fields": {
-            "value": dat["value"]
+            "value": float(dat["value"])
         }
     }
     return point
 
+
+def createInfluxPoint(measurementName, measurementLocation, measurementValue):
+    point = {
+        "measurement": measurementName,
+        "tags": {
+            "deviceLocation": measurementLocation,
+        },
+        "fields": {
+            "value": measurementValue
+        }
+    }
+    return point
 
 
 # ** ********************************************************
@@ -62,10 +74,12 @@ def on_message(client, userdata, message):
     }
 
     newPoint = None
-    if dat["measurement"] == "temperature":
-        newPoint = createTemperaturePoint(dat)
-    elif dat["measurement"] == "humidity":
-        newPoint = createHumidityPoint(dat)
+    #if dat["measurement"] == "temperature":
+    #    newPoint = createTemperaturePoint(dat)
+    #elif dat["measurement"] == "humidity":
+    #    newPoint = createHumidityPoint(dat)
+    #else:
+    newPoint = createInfluxPoint(dat["measurement"], dat["location"], float(dat["value"]))
 
     if(newPoint):
         influx_client.write_points([newPoint])
