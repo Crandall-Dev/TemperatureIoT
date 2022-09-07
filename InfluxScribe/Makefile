@@ -18,7 +18,7 @@ install:
 	cp IoTScribe.py $(BIN_DIR)/
 
 install-service:
-	cp ./IOTScribe.service $(SYSTEMD_DIR)/
+	cp ./IoTScribe.service $(SYSTEMD_DIR)/
 	systemctl enable $(SYSTEMD_SERVICE)
 
 status:
